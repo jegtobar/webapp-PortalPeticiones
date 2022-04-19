@@ -1019,7 +1019,7 @@ import axios from 'axios';
            this.loading=true
             if (JSON.parse(localStorage.getItem('distrito'))===1||JSON.parse(localStorage.getItem('distrito'))===2||JSON.parse(localStorage.getItem('distrito'))===3)
             {
-              axios.get(process.env.VUE_APP_SERVICE_URL+'persona/promotores/'+JSON.parse(localStorage.getItem('alcaldia'))+'/'+JSON.parse(localStorage.getItem('distrito'))+'/'+this.persona.vecino)
+              axios.get(process.env.VUE_APP_SERVICE_URL+'persona/promotores/'+JSON.parse(localStorage.getItem('alcaldia'))+'/'+JSON.parse(localStorage.getItem('distrito'))+'/'+this.persona.vecino.split(' ').join('_'))
                 .then((response)=>{
                     this.personas=response.data.persona
                     this.loading=false
@@ -1029,7 +1029,7 @@ import axios from 'axios';
                 })
             }
             else{
-              axios.get(process.env.VUE_APP_SERVICE_URL+'persona/vecinos/zona/'+JSON.parse(localStorage.getItem('alcaldia'))+'/'+this.persona.vecino)
+              axios.get(process.env.VUE_APP_SERVICE_URL+'persona/vecinos/zona/'+JSON.parse(localStorage.getItem('alcaldia'))+'/'+this.persona.vecino.split(' ').join('_'))
                 .then((response)=>{
                     this.personas=response.data.persona
                     this.loading=false
