@@ -275,8 +275,6 @@ import { mapMutations } from 'vuex';
 
         },
 
-
- 
       editItem (item) {
         this.seguimientoVecinosSatisfechos = Object.assign({}, item)
         this.buscarSeguimientoVecino();
