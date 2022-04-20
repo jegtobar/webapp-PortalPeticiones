@@ -61,14 +61,43 @@ export default {
     }),
      methods: {
         getSeguimientos(){
-            axios.get(process.env.VUE_APP_SERVICE_URL+'reporte/seguimientomntosatisfechos')
-                .then((response)=>{
-                    this.seguimientos=response.data.reportes;
-                    this.titulo=response.data.titulo;
-                })
-                .catch(function(error){
-                   console.log(error.response.data);
-                })
+            switch (JSON.parse(localStorage.getItem('rol'))) {
+                case 1:
+                  if (JSON.parse(localStorage.getItem('distrito'))===1||JSON.parse(localStorage.getItem('distrito'))===2||JSON.parse(localStorage.getItem('distrito'))===3){
+                        axios.get(process.env.VUE_APP_SERVICE_URL+'reporte/seguimientomntosatisfechos/'+JSON.parse(localStorage.getItem('alcaldia'))+'/'+JSON.parse(localStorage.getItem('distrito')))
+                        .then((response)=>{
+                            this.seguimientos=response.data.reportes;
+                            this.titulo=response.data.titulo;
+                        })
+                        .catch(function(error){
+                        console.log(error.response.data);
+                        })
+                  }else{
+                       axios.get(process.env.VUE_APP_SERVICE_URL+'reporte/seguimientomntosatisfechos/'+JSON.parse(localStorage.getItem('alcaldia')))
+                        .then((response)=>{
+                            this.seguimientos=response.data.reportes;
+                            this.titulo=response.data.titulo;
+                        })
+                        .catch(function(error){
+                        console.log(error.response.data);
+                        })
+                  }
+                    
+                    break;
+                case 4:
+                    axios.get(process.env.VUE_APP_SERVICE_URL+'reporte/seguimientomntosatisfechos')
+                    .then((response)=>{
+                        this.seguimientos=response.data.reportes;
+                        this.titulo=response.data.titulo;
+                    })
+                    .catch(function(error){
+                    console.log(error.response.data);
+                    })
+                    break;
+            
+                default:
+                    break;
+            }
         }
      }
 }

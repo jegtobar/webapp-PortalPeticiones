@@ -1011,7 +1011,7 @@ import MntoMuySatisfechos from '../Reportes/MntoMuySatisfechos.vue'
 
     methods: {
         getPersonas(){
-          if( JSON.parse(localStorage.getItem('username'))=='jfigueredo' || JSON.parse(localStorage.getItem('username'))=='jgarcia' ){
+          if( JSON.parse(localStorage.getItem('username'))=='jfigueredo' || JSON.parse(localStorage.getItem('username'))=='jgarcia'||JSON.parse(localStorage.getItem('rol'))===1){
               this.descarga = 'S'
             }
            this.loading=true

@@ -1030,7 +1030,7 @@ import Satisfechos from '../Reportes/Satisfechos.vue'
         // },
 
         getPersonas(){
-            if( JSON.parse(localStorage.getItem('username'))=='jfigueredo' || JSON.parse(localStorage.getItem('username'))=='jgarcia'){
+            if( JSON.parse(localStorage.getItem('username'))=='jfigueredo' || JSON.parse(localStorage.getItem('username'))=='jgarcia'||JSON.parse(localStorage.getItem('rol'))===1){
               this.descarga = 'S'
             }
             this.loading=true
@@ -1055,8 +1055,7 @@ import Satisfechos from '../Reportes/Satisfechos.vue'
                    console.log(error.response.data)
                 })
             }
-            else{
-              
+            else{ 
               axios.get(process.env.VUE_APP_SERVICE_URL+'persona/listaporzona/'+JSON.parse(localStorage.getItem('alcaldia')))
                 .then((response)=>{
                     this.personas=response.data.persona
