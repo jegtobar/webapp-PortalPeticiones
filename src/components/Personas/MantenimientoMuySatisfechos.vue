@@ -23,7 +23,7 @@
       <v-toolbar
         flat
       >
-        <v-toolbar-title>Vecinos</v-toolbar-title>
+        <v-toolbar-title style="cursor: pointer;" v-on:click="getPersonas()">Vecinos</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -35,6 +35,7 @@
         label="Buscar"
         single-line
         hide-details
+        v-on:keyup.enter="vecinosByName()"
       ></v-text-field>
 
         <v-spacer></v-spacer>
@@ -1015,7 +1016,7 @@ import MntoMuySatisfechos from '../Reportes/MntoMuySatisfechos.vue'
               this.descarga = 'S'
             }
            this.loading=true
-            if (JSON.parse(localStorage.getItem('rol'))===4){
+            if (JSON.parse(localStorage.getItem('rol'))===4||JSON.parse(localStorage.getItem('rol'))===6){
                 axios.get(process.env.VUE_APP_SERVICE_URL+'persona/listaMantenimientoMuySatisfechos')
                 .then((response)=>{
                     this.personas=response.data.personas;
@@ -1046,10 +1047,20 @@ import MntoMuySatisfechos from '../Reportes/MntoMuySatisfechos.vue'
                    console.log(error.response.data)
                 })
             }
-           
-          
+          this.search = ""
         },
-
+        vecinosByName(){
+         
+                axios.get(process.env.VUE_APP_SERVICE_URL+'persona/lista/4/'+this.search.split(' ').join('_'))
+                .then((response)=>{
+                    this.search = ""
+                    this.personas=response.data.persona
+                    this.loading=false
+                })
+                .catch(function(error){
+                   console.log(error.response.data)
+                })
+        },
 
         getZonas(){
             axios.get(process.env.VUE_APP_SERVICE_URL+'catalogo/zonas')
