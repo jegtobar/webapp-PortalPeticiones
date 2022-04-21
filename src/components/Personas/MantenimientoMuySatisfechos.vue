@@ -19,795 +19,795 @@
                 sort-by="calories"
                 class="elevation-1"
               >
-    <template v-slot:top>
-      <v-toolbar
-        flat
-      >
-        <v-toolbar-title style="cursor: pointer;" v-on:click="getPersonas()">Vecinos</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider>
-        <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Buscar"
-        single-line
-        hide-details
-        v-on:keyup.enter="vecinosByName()"
-      ></v-text-field>
-
-        <v-spacer></v-spacer>
-        <!--Editar vecino-->
-        <v-dialog
-          v-model="dialogEdit"
-          max-width="1000px"
-        >
-
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-form
-                ref="formEdit"
-                v-model="validEdit"
-                @submit.prevent="editarPersona">
-                  <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.pNombre"
-                      label="Primer Nombre"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.sNombre"
-                      label="Segundo Nombre"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.tNombre"
-                      label="Tercer Nombre"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.pApellido"
-                      label="Primer Apellido"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.sApellido"
-                      label="Segundo Apellido"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.tApellido"
-                      label="Apellido de Casada"
-                    ></v-text-field>
-                  </v-col>
-                  <!-- <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.dpi"
-                      label="Número de DPI"
-                      type="number"
-                    ></v-text-field>
-                  </v-col> -->
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.nacimiento"
-                      label="Fecha de nacimiento"
-                      type="date"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.direccion"
-                      label="Dirección"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.numero_casa"
-                      label="No. Casa"
-                    ></v-text-field>
-                  </v-col>
-                   <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                  <v-select v-model="editedItem.zona_id"
-                    :items="zonas"
-                    item-text="zona"
-                    item-value='id'
-                    label="Zona"
-                    outlined
-                    color="#10069f"
-                    @change="getColoniasEdit()"
-                    ></v-select> 
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                  <v-select v-model="editedItem.colonia_id"
-                    :items="colonias"
-                    item-text="colonia"
-                    item-value='id'
-                    label="Colonia"
-                    outlined
-                    color="#10069f"
-                    
-                    ></v-select> 
-                   
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.telefono_casa"
-                      label="Teléfono Residencial"
-                      type="number"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.celular"
-                      label="Celular"
-                      type="number"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.correo"
-                      label="Correo Electrónico"
-                      type="email"
-                    ></v-text-field>
-                  </v-col>
-                <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-select v-model="editedItem.genero"
-                        :items="['M', 'F']"
-                        label="Género"
-                        outlined
-                        color="#10069f"
-                    ></v-select>
-                  </v-col>
-
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-select v-model="editedItem.liderazgo"
-                    :items="liderazgo"
-                    item-text="liderazgo"
-                    item-value='id'
-                    label="Liderazgo comunitario"
-                    outlined
-                    color="#10069f"
-                    ></v-select>
-                  </v-col>
-                  <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="close"
-                  >
-                    Cancelar
-                  </v-btn>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    type="submit"
-                  >
-                    Guardar
-                  </v-btn>
-                </v-card-actions>
-                </v-row>
-                </v-form>
-              </v-container>
-            </v-card-text>
-          </v-card>
-        </v-dialog>
-<!-- Crear Vecino -->
-
-        <v-dialog
-            v-model="dialogNewItem"
-            max-width="1000px"
-          >
-          <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="primary"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                Nuevo
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="text-h5">{{ formTitle }}</span>
-              </v-card-title>
-
-              <v-card-text>
-                <v-container>
-                  <v-form
-                      ref="form"
-                      v-model="valid"
-                      @submit.prevent="guardarPersona">
-                    <v-row>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.pNombre"
-                        label="Primer Nombre"
-                        :rules="Rules"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.sNombre"
-                        label="Segundo Nombre"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.tNombre"
-                        label="Tercer Nombre"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.pApellido"
-                        label="Primer Apellido"
-                        :rules="Rules"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.sApellido"
-                        label="Segundo Apellido"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.tApellido"
-                        label="Apellido de Casada"
-                      ></v-text-field>
-                    </v-col>
-                    <!-- <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.dpi"
-                        label="Número de DPI"
-                        type="number"
-                        
-                      ></v-text-field>
-                    </v-col> -->
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.nacimiento"
-                        label="Fecha de nacimiento"
-                        type="date"
-                        
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.direccion"
-                        label="Dirección"
-                        :rules="Rules"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.numero_casa"
-                        label="No. Casa"
-                        
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-select v-model="newItem.zona_id"
-                      :items="zonas"
-                      item-text="zona"
-                      item-value='id'
-                      label="Zona"
-                      outlined
-                      color="#10069f"
-                      @change="getColonias()"
-                      :rules="Rules"
-                      ></v-select> 
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-select v-model="newItem.colonia_id"
-                      :items="colonias"
-                      item-text="colonia"
-                      item-value='id'
-                      label="Colonia"
-                      outlined
-                      color="#10069f"
-                      :rules="Rules"
-                      ></v-select> 
-                    
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-text-field
-                        v-model="newItem.telefono_casa"
-                        label="Teléfono Residencial"
-                        type="number"
-                      ></v-text-field>
-                      
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-text-field
-                        v-model="newItem.celular"
-                        label="Celular"
-                        type="number"
-                        :rules="Rules"
-                      ></v-text-field>
-                  
-                    </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="newItem.correo"
-                        label="Correo Electrónico"
-                        type="email"
-                        
-                      ></v-text-field>
-                      
-                    </v-col>
-
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-select v-model="newItem.genero"
-                          :items="['M', 'F']"
-                          label="Género"
-                          outlined
-                          color="#10069f"
-                          :rules="Rules"
-                      ></v-select>
-                      
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-select v-model="newItem.liderazgo"
-                      :items="liderazgo"
-                      item-text="liderazgo"
-                      item-value='id'
-                      label="Liderazgo comunitario"
-                      outlined
-                      color="#10069f"
-                      :rules="Rules"
-                      ></v-select>
-                    </v-col>
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      @click="closeNewItem"
-                    >
-                      Cancelar
-                    </v-btn>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      type="submit"
-                    >
-                      Guardar
-                    </v-btn>
-                  </v-card-actions>
-                  </v-row>
-                  </v-form>
-                
-                </v-container>
-              </v-card-text>            
-            </v-card>
-        </v-dialog>
-<!-- Modal detalle de peticiones -->
-        <v-dialog
-          v-model="dialogSeguimiento"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-        >
-
-          <v-card>
-            <v-card-title>
-
-        <v-toolbar
-          dark
-          color="#10069f"
-        >
-          <v-btn
-            icon
-            dark
-            @click="dialogSeguimiento = false"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title><span class="text-h5">Ingresar Seguimiento</span></v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn
-
-              color="success"
-              @click="putMantenimiento"
-            >
-              Trasladar
-            </v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-list-item-content>
-                    <v-list-item-subtitle></v-list-item-subtitle>
-                </v-list-item-content>
-                <v-form 
-                    ref="formSeguimiento"
-                    v-model="validSeguimiento"
-                    @submit.prevent="guardarSeguimiento"
+              <template v-slot:top>
+                <v-toolbar
+                  flat
                 >
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="mntoVecinosSatisfechos.fecha"
-                        label="Fecha"
-                        type="date"
-                        :rules="Rules"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-select 
-                          v-model="mntoVecinosSatisfechos.actividad_id"
-                          :items="actividades"
-                          item-text="actividad"
-                          item-value="id"
-                          label="Actividad"
-                          outlined
-                          color="#10069f"
-                          :rules="Rules"
-                      ></v-select>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-textarea
-                        v-model="mntoVecinosSatisfechos.descripcion"
-                        label="Descripción"
-                        :rules="Rules"
-                    ></v-textarea>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                    <v-select
-                      v-model="mntoVecinosSatisfechos.responsable"
-                      label="Responsable"
-                      :items="promotor"
-                      item-text="promotor"
-                      item-value="promotor"
-                      :rules="Rules"
-                      outlined
-                    >
-                    </v-select>
-                    </v-col>
-                    <v-card-actions >
-                      <v-btn
-                          class="mx-2"
-                          fab
-                          dark
-                          small
-                          color="indigo darken-4"
-                          type="submit"
-                          title="Guardar"                                   
-                          >
-                          <v-icon dark>
-                              mdi-content-save-all-outline
-                          </v-icon>
-                      </v-btn>      
-                    </v-card-actions>
-                  </v-row>
-                </v-form>
-      
-                <br>
-                  <v-divider></v-divider>
-                            <v-banner
-                                elevation="9"
-                                outlined
-                                rounded
-                                class="indigo darken-4 white--text"
-                            >
-                            <v-icon class="white">mdi-account</v-icon>
-                                Historial de seguimiento del vecino.
-                            </v-banner>
-                      <!-- <v-list-item-content>
-                          <v-list-item-title>Historial de Seguimiento Vecino Satisfecho</v-list-item-title>
-                      </v-list-item-content> -->
-                      <template>
-                         <v-card-title>
-                            <v-text-field
-                            v-model="buscarSeguimiento"
-                            append-icon="mdi-magnify"
-                            label="Buscar"
-                            single-line
-                            hide-details
-                          ></v-text-field>
-                          </v-card-title>
-                          <v-data-table
-                              :headers="headersActividad"
-                              :items="seguimiento"
-                              :search="buscarSeguimiento"
-                              :loading="loading"
-                              :items-per-page="5"
-                              class="elevation-1"
-                          >
-                  <template v-slot:item.actionsActividad="{ item }">
-                    <v-icon
-                      small
-                      class="mr-2"
-                      @click="editSeguimiento(item)"
-                      title="Editar Seguimiento"
-                    >
-                      mdi-pencil
-                    </v-icon>
-                    
-                    <v-icon
-                      small
-                      @click="deleteSeguimiento(item)"
-                      title="Eliminar Seguimiento"
-                    >
-                      mdi-delete
-                    </v-icon>
-                    <!-- DIALOGO EDITAR SEGUIMIENTO -->
+                  <v-toolbar-title style="cursor: pointer;" v-on:click="getPersonas()">Vecinos</v-toolbar-title>
+                  <v-divider
+                    class="mx-4"
+                    inset
+                    vertical
+                  ></v-divider>
+                  <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Buscar"
+                  single-line
+                  hide-details
+                  v-on:keyup.enter="vecinosByName()"
+                ></v-text-field>
+
+                  <v-spacer></v-spacer>
+                  <!--Editar vecino-->
                   <v-dialog
-                        v-model="dialogEditSeguimiento"
-                        max-width="1000px"
-                        :retain-focus="false"
+                    v-model="dialogEdit"
+                    max-width="1000px"
                   >
-                          <v-card>
-                          <v-card-title>
-                            <span class="text-h5">Editar Seguimiento</span>
-                          </v-card-title>
 
-                          <v-card-text>
-                            <v-container>
-                              <v-row>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                  <v-text-field
-                                    v-model="editarSeguimiento.fecha"
-                                    label="Fecha Registro"
-                                    type="date"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                <v-select
-                                    v-model="editarSeguimiento.actividad_id"
-                                    :items="actividades"
-                                    item-text="actividad"
-                                    item-value="id"
-                                    label="Actividad"
-                                    outlined
-                                    color="#10069f"
-                                    >
-                                </v-select>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                  <v-textarea
-                                    v-model="editarSeguimiento.descripcion"
-                                    label="Descripción"
-                                ></v-textarea>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                <v-select
-                                    v-model="editarSeguimiento.responsable"
-                                    label="Responsable"
-                                    :items="promotor"
-                                    item-text="promotor"
-                                    item-value="promotor"
-                                    required
-                                    outlined
-                                    >
-                                </v-select>
-                                </v-col>
-                                
-                              </v-row>
-                            </v-container>
-                          </v-card-text>
+                    <v-card>
+                      <v-card-title>
+                        <span class="text-h5">{{ formTitle }}</span>
+                      </v-card-title>
 
-                          <v-card-actions>
+                      <v-card-text>
+                        <v-container>
+                          <v-form
+                          ref="formEdit"
+                          v-model="validEdit"
+                          @submit.prevent="editarPersona">
+                            <v-row>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.pNombre"
+                                label="Primer Nombre"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.sNombre"
+                                label="Segundo Nombre"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.tNombre"
+                                label="Tercer Nombre"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.pApellido"
+                                label="Primer Apellido"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.sApellido"
+                                label="Segundo Apellido"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.tApellido"
+                                label="Apellido de Casada"
+                              ></v-text-field>
+                            </v-col>
+                            <!-- <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.dpi"
+                                label="Número de DPI"
+                                type="number"
+                              ></v-text-field>
+                            </v-col> -->
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.nacimiento"
+                                label="Fecha de nacimiento"
+                                type="date"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.direccion"
+                                label="Dirección"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.numero_casa"
+                                label="No. Casa"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                            <v-select v-model="editedItem.zona_id"
+                              :items="zonas"
+                              item-text="zona"
+                              item-value='id'
+                              label="Zona"
+                              outlined
+                              color="#10069f"
+                              @change="getColoniasEdit()"
+                              ></v-select> 
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                            <v-select v-model="editedItem.colonia_id"
+                              :items="colonias"
+                              item-text="colonia"
+                              item-value='id'
+                              label="Colonia"
+                              outlined
+                              color="#10069f"
+                              
+                              ></v-select> 
+                            
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.telefono_casa"
+                                label="Teléfono Residencial"
+                                type="number"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.celular"
+                                label="Celular"
+                                type="number"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="editedItem.correo"
+                                label="Correo Electrónico"
+                                type="email"
+                              ></v-text-field>
+                            </v-col>
+                          <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-select v-model="editedItem.genero"
+                                  :items="['M', 'F']"
+                                  label="Género"
+                                  outlined
+                                  color="#10069f"
+                              ></v-select>
+                            </v-col>
+
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                            >
+                              <v-select v-model="editedItem.liderazgo"
+                              :items="liderazgo"
+                              item-text="liderazgo"
+                              item-value='id'
+                              label="Liderazgo comunitario"
+                              outlined
+                              color="#10069f"
+                              ></v-select>
+                            </v-col>
+                            <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn
                               color="blue darken-1"
                               text
-                              @click="closeEditSeguimiento()"
+                              @click="close"
                             >
                               Cancelar
                             </v-btn>
                             <v-btn
                               color="blue darken-1"
                               text
-                              @click="putSeguimientoSatisfecho()"
+                              type="submit"
                             >
                               Guardar
                             </v-btn>
                           </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-    
-                  </template>
-                          </v-data-table>
+                          </v-row>
+                          </v-form>
+                        </v-container>
+                      </v-card-text>
+                    </v-card>
+                  </v-dialog>
+          <!-- Crear Vecino -->
+
+                  <v-dialog
+                      v-model="dialogNewItem"
+                      max-width="1000px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          color="primary"
+                          dark
+                          class="mb-2"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          Nuevo
+                        </v-btn>
+                      </template>
+                      <v-card>
+                        <v-card-title>
+                          <span class="text-h5">{{ formTitle }}</span>
+                        </v-card-title>
+
+                        <v-card-text>
+                          <v-container>
+                            <v-form
+                                ref="form"
+                                v-model="valid"
+                                @submit.prevent="guardarPersona">
+                              <v-row>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.pNombre"
+                                  label="Primer Nombre"
+                                  :rules="Rules"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.sNombre"
+                                  label="Segundo Nombre"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.tNombre"
+                                  label="Tercer Nombre"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.pApellido"
+                                  label="Primer Apellido"
+                                  :rules="Rules"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.sApellido"
+                                  label="Segundo Apellido"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.tApellido"
+                                  label="Apellido de Casada"
+                                ></v-text-field>
+                              </v-col>
+                              <!-- <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.dpi"
+                                  label="Número de DPI"
+                                  type="number"
+                                  
+                                ></v-text-field>
+                              </v-col> -->
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.nacimiento"
+                                  label="Fecha de nacimiento"
+                                  type="date"
+                                  
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.direccion"
+                                  label="Dirección"
+                                  :rules="Rules"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.numero_casa"
+                                  label="No. Casa"
+                                  
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-select v-model="newItem.zona_id"
+                                :items="zonas"
+                                item-text="zona"
+                                item-value='id'
+                                label="Zona"
+                                outlined
+                                color="#10069f"
+                                @change="getColonias()"
+                                :rules="Rules"
+                                ></v-select> 
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-select v-model="newItem.colonia_id"
+                                :items="colonias"
+                                item-text="colonia"
+                                item-value='id'
+                                label="Colonia"
+                                outlined
+                                color="#10069f"
+                                :rules="Rules"
+                                ></v-select> 
+                              
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-text-field
+                                  v-model="newItem.telefono_casa"
+                                  label="Teléfono Residencial"
+                                  type="number"
+                                ></v-text-field>
+                                
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-text-field
+                                  v-model="newItem.celular"
+                                  label="Celular"
+                                  type="number"
+                                  :rules="Rules"
+                                ></v-text-field>
+                            
+                              </v-col>
+                            <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="newItem.correo"
+                                  label="Correo Electrónico"
+                                  type="email"
+                                  
+                                ></v-text-field>
+                                
+                              </v-col>
+
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-select v-model="newItem.genero"
+                                    :items="['M', 'F']"
+                                    label="Género"
+                                    outlined
+                                    color="#10069f"
+                                    :rules="Rules"
+                                ></v-select>
+                                
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-select v-model="newItem.liderazgo"
+                                :items="liderazgo"
+                                item-text="liderazgo"
+                                item-value='id'
+                                label="Liderazgo comunitario"
+                                outlined
+                                color="#10069f"
+                                :rules="Rules"
+                                ></v-select>
+                              </v-col>
+                              <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                color="blue darken-1"
+                                text
+                                @click="closeNewItem"
+                              >
+                                Cancelar
+                              </v-btn>
+                              <v-btn
+                                color="blue darken-1"
+                                text
+                                type="submit"
+                              >
+                                Guardar
+                              </v-btn>
+                            </v-card-actions>
+                            </v-row>
+                            </v-form>
                           
-                      </template>  
-         
-                </v-container>
-              </v-card-text>
-            </v-card>
-        </v-dialog> 
-      </v-toolbar>
-  </template>
+                          </v-container>
+                        </v-card-text>            
+                      </v-card>
+                  </v-dialog>
+          <!-- Modal detalle de peticiones -->
+                  <v-dialog
+                    v-model="dialogSeguimiento"
+                    fullscreen
+                    hide-overlay
+                    transition="dialog-bottom-transition"
+                  >
+
+                    <v-card>
+                      <v-card-title>
+
+                  <v-toolbar
+                    dark
+                    color="#10069f"
+                  >
+                    <v-btn
+                      icon
+                      dark
+                      @click="dialogSeguimiento = false"
+                    >
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title><span class="text-h5">Ingresar Seguimiento</span></v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                      <v-btn
+
+                        color="success"
+                        @click="putMantenimiento"
+                      >
+                        Trasladar
+                      </v-btn>
+                    </v-toolbar-items>
+                  </v-toolbar>
+                      </v-card-title>
+
+                      <v-card-text>
+                        <v-container>
+                          <v-list-item-content>
+                              <v-list-item-subtitle></v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-form 
+                              ref="formSeguimiento"
+                              v-model="validSeguimiento"
+                              @submit.prevent="guardarSeguimiento"
+                          >
+                            <v-row>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                                <v-text-field
+                                  v-model="mntoVecinosSatisfechos.fecha"
+                                  label="Fecha"
+                                  type="date"
+                                  :rules="Rules"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-select 
+                                    v-model="mntoVecinosSatisfechos.actividad_id"
+                                    :items="actividades"
+                                    item-text="actividad"
+                                    item-value="id"
+                                    label="Actividad"
+                                    outlined
+                                    color="#10069f"
+                                    :rules="Rules"
+                                ></v-select>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-textarea
+                                  v-model="mntoVecinosSatisfechos.descripcion"
+                                  label="Descripción"
+                                  :rules="Rules"
+                              ></v-textarea>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                              >
+                              <v-select
+                                v-model="mntoVecinosSatisfechos.responsable"
+                                label="Responsable"
+                                :items="promotor"
+                                item-text="promotor"
+                                item-value="promotor"
+                                :rules="Rules"
+                                outlined
+                              >
+                              </v-select>
+                              </v-col>
+                              <v-card-actions >
+                                <v-btn
+                                    class="mx-2"
+                                    fab
+                                    dark
+                                    small
+                                    color="indigo darken-4"
+                                    type="submit"
+                                    title="Guardar"                                   
+                                    >
+                                    <v-icon dark>
+                                        mdi-content-save-all-outline
+                                    </v-icon>
+                                </v-btn>      
+                              </v-card-actions>
+                            </v-row>
+                          </v-form>
+                
+                          <br>
+                            <v-divider></v-divider>
+                                      <v-banner
+                                          elevation="9"
+                                          outlined
+                                          rounded
+                                          class="indigo darken-4 white--text"
+                                      >
+                                      <v-icon class="white">mdi-account</v-icon>
+                                          Historial de seguimiento del vecino.
+                                      </v-banner>
+                                <!-- <v-list-item-content>
+                                    <v-list-item-title>Historial de Seguimiento Vecino Satisfecho</v-list-item-title>
+                                </v-list-item-content> -->
+                                <template>
+                                  <v-card-title>
+                                      <v-text-field
+                                      v-model="buscarSeguimiento"
+                                      append-icon="mdi-magnify"
+                                      label="Buscar"
+                                      single-line
+                                      hide-details
+                                    ></v-text-field>
+                                    </v-card-title>
+                                    <v-data-table
+                                        :headers="headersActividad"
+                                        :items="seguimiento"
+                                        :search="buscarSeguimiento"
+                                        :loading="loading"
+                                        :items-per-page="5"
+                                        class="elevation-1"
+                                    >
+                            <template v-slot:item.actionsActividad="{ item }">
+                              <v-icon
+                                small
+                                class="mr-2"
+                                @click="editSeguimiento(item)"
+                                title="Editar Seguimiento"
+                              >
+                                mdi-pencil
+                              </v-icon>
+                              
+                              <v-icon
+                                small
+                                @click="deleteSeguimiento(item)"
+                                title="Eliminar Seguimiento"
+                              >
+                                mdi-delete
+                              </v-icon>
+                              <!-- DIALOGO EDITAR SEGUIMIENTO -->
+                            <v-dialog
+                                  v-model="dialogEditSeguimiento"
+                                  max-width="1000px"
+                                  :retain-focus="false"
+                            >
+                                    <v-card>
+                                    <v-card-title>
+                                      <span class="text-h5">Editar Seguimiento</span>
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                      <v-container>
+                                        <v-row>
+                                          <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="4"
+                                          >
+                                            <v-text-field
+                                              v-model="editarSeguimiento.fecha"
+                                              label="Fecha Registro"
+                                              type="date"
+                                              required
+                                            ></v-text-field>
+                                          </v-col>
+                                          <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="4"
+                                          >
+                                          <v-select
+                                              v-model="editarSeguimiento.actividad_id"
+                                              :items="actividades"
+                                              item-text="actividad"
+                                              item-value="id"
+                                              label="Actividad"
+                                              outlined
+                                              color="#10069f"
+                                              >
+                                          </v-select>
+                                          </v-col>
+                                          <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="4"
+                                          >
+                                            <v-textarea
+                                              v-model="editarSeguimiento.descripcion"
+                                              label="Descripción"
+                                          ></v-textarea>
+                                          </v-col>
+                                          <v-col
+                                            cols="12"
+                                            sm="6"
+                                            md="4"
+                                          >
+                                          <v-select
+                                              v-model="editarSeguimiento.responsable"
+                                              label="Responsable"
+                                              :items="promotor"
+                                              item-text="promotor"
+                                              item-value="promotor"
+                                              required
+                                              outlined
+                                              >
+                                          </v-select>
+                                          </v-col>
+                                          
+                                        </v-row>
+                                      </v-container>
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                      <v-spacer></v-spacer>
+                                      <v-btn
+                                        color="blue darken-1"
+                                        text
+                                        @click="closeEditSeguimiento()"
+                                      >
+                                        Cancelar
+                                      </v-btn>
+                                      <v-btn
+                                        color="blue darken-1"
+                                        text
+                                        @click="putSeguimientoSatisfecho()"
+                                      >
+                                        Guardar
+                                      </v-btn>
+                                    </v-card-actions>
+                                  </v-card>
+                              </v-dialog>
+              
+                            </template>
+                                    </v-data-table>
+                                    
+                                </template>  
                   
+                          </v-container>
+                        </v-card-text>
+                      </v-card>
+                  </v-dialog> 
+                </v-toolbar>
+            </template>
+                            
 
 <!-- Acciones Editar-Eliminar -->
                   <template v-slot:item.actions="{ item }">
@@ -849,9 +849,6 @@ import MntoMuySatisfechos from '../Reportes/MntoMuySatisfechos.vue'
         this.getLiderazgo();
         this.getZonas();
         this.getCatalogoActividades()
-        
-
-
     },
       
     data: () => ({
