@@ -90,6 +90,7 @@ export default new Vuex.Store({
     localStorage.removeItem('username');
     localStorage.removeItem('rol');
     localStorage.removeItem('alcaldia');
+    localStorage.removeItem('distrito');
     localStorage.removeItem('nombres');
     localStorage.removeItem('apellidos');
     localStorage.removeItem('user_id');

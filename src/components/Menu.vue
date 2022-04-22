@@ -159,7 +159,6 @@ export default {
         
         axios.get(process.env.VUE_APP_SERVICE_URL+'menu/'+JSON.parse(localStorage.getItem('user_id')))
                 .then((response)=>{
-                  
                   this.links=response.data.menu
                   console.log(this.arreglo.menu)
                     

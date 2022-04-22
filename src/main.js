@@ -139,22 +139,23 @@ router.beforeEach((to, from, next) => {
     "rol":JSON.parse(localStorage.getItem('rol'))
   }
   
-  axios.post(process.env.VUE_APP_SERVICE_URL+'rutas', data)
-  .then((response)=>{
-    if(response.data.length<=0){
-      // return next('/inicio')
-    }
-  })
-.catch(function(error){
-console.log(error.response.data)
-})
+
 
   if (to.name != 'login') {
         
     if (store.state.accessToken == null) {
         return next('/');
+    }else{
+      axios.post(process.env.VUE_APP_SERVICE_URL+'rutas', data)
+      .then((response)=>{
+        if(response.data.length<=0){
+          return next('/inicio')
+        }
+      })
+    .catch(function(error){
+    console.log(error.response.data)
+    })
     }
-
 }
 
   if (to.name == 'login') {
