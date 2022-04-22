@@ -1371,7 +1371,7 @@ import MuySatisfechos from '../Reportes/MuySatisfechos.vue'
                       axios.put(process.env.VUE_APP_SERVICE_URL+'persona/mantenimiento/'+this.seguimientoVecinosSatisfechos.id, this.editedItem.seguimiento)
                       .then(()=>{
                         this.getPersonas();
-                         this.$refs.mantenimiento.getPersonas()
+                        this.$refs.mantenimiento.getPersonas()
                         this.$swal('Guardado', '', 'success')
                         this.dialogSeguimiento = false
                          })

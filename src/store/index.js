@@ -22,9 +22,9 @@ export default new Vuex.Store({
   },
   mutations: {
 
-    //asignar valores a las variabels globales///commit
-    loginStart: state => state.loggingIn = true,
-    loginStop: (state, errorMessage) => {
+      //asignar valores a las variabels globales///commit
+      loginStart: state => state.loggingIn = true,
+      loginStop: (state, errorMessage) => {
 
       state.loggingIn = false;
       state.loginError = errorMessage;
@@ -32,17 +32,14 @@ export default new Vuex.Store({
     },
     updateAccessToken: (state, accessToken) => {
 
-        state.accessToken = accessToken;
+      state.accessToken = accessToken;
 
     },
     logout: (state) => {
 
-        state.accessToken = null;
+      state.accessToken = null;
         
     }, 
- 
-
-    
 
   },
   actions: {
@@ -101,8 +98,6 @@ export default new Vuex.Store({
     router.push('/');
     
 }
-
-
   },
   modules: {
     dialog: dialog

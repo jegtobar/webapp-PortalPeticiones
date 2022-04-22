@@ -152,11 +152,11 @@ router.beforeEach((to, from, next) => {
           return next('/inicio')
         }
       })
-    .catch(function(error){
-    console.log(error.response.data)
-    })
+      .catch(function(error){
+      console.log(error.response.data)
+      })
     }
-}
+  }
 
   if (to.name == 'login') {
 
