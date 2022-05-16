@@ -132,15 +132,12 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    
   store.dispatch('fetchAccessToken');
   const data = {
     "url":to.path,
     "rol":JSON.parse(localStorage.getItem('rol'))
   }
   
-
-
   if (to.name != 'login') {
         
     if (store.state.accessToken == null) {

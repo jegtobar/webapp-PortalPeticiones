@@ -1,65 +1,54 @@
-
-
 <template>
   <v-container>
     <v-row>
       <v-col class="mb-4">
         <v-banner
-        elevation="9"
-        outlined
-        rounded
-        class="indigo darken-4 white--text"
+          elevation="9"
+          outlined
+          rounded
+          class="indigo darken-4 white--text"
         >
-        <v-icon class="white">mdi-view-dashboard</v-icon>
-                  Dashboard Vecinos Satisfechos -Vecinos Muy Satisfechos
-        </v-banner>                          
+          <v-icon class="white">mdi-view-dashboard</v-icon>
+          Dashboard Vecinos Satisfechos -Vecinos Muy Satisfechos
+        </v-banner>
       </v-col>
       <v-col>
-        <v-select
-        label="Seleccione Alcaldía"
-        >
-        </v-select>
+        <v-select label="Seleccione Alcaldía"> </v-select>
         <v-divider></v-divider>
-        <v-select
-        label="Seleccione Colonia"
-        ></v-select>   
+        <v-select label="Seleccione Colonia"></v-select>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <v-card
-            class="mx-auto"
-            max-width="344"
-            elevation="13"
-            outlined
-          >
-            <v-list-item three-line>
-              <v-list-item-content>
-                <div class="text-overline mb-4">
-                  <highcharts :options="chartSatisfechos" :callback="chartCallback"></highcharts>
-                </div>
-              </v-list-item-content>  
-            </v-list-item>
+        <v-card class="mx-auto" max-width="344" elevation="13" outlined>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="text-overline mb-4">
+                <highcharts
+                  :options="chartSatisfechos"
+                  :callback="chartCallback"
+                ></highcharts>
+              </div>
+            </v-list-item-content>
+          </v-list-item>
         </v-card>
       </v-col>
       <v-col>
-        <v-card
-            class="mx-auto"
-            max-width="344"
-            elevation="13"
-            outlined
-          >
-            <v-list-item three-line>
-              <v-list-item-content>
-                <div class="text-overline mb-4">
-                  <highcharts :options="chartMuySatisfechos" :callback="chartCallback"></highcharts>
-                </div>
-              </v-list-item-content>  
-            </v-list-item>
+        <v-card class="mx-auto" max-width="344" elevation="13" outlined>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="text-overline mb-4">
+                <highcharts
+                  :options="chartMuySatisfechos"
+                  :callback="chartCallback"
+                ></highcharts>
+              </div>
+            </v-list-item-content>
+          </v-list-item>
         </v-card>
       </v-col>
     </v-row>
-  </v-container> 
+  </v-container>
 </template>
 
 <script>
@@ -71,7 +60,7 @@ hcMore(Highcharts);
 
 export default {
   components: {
-    highcharts: Chart
+    highcharts: Chart,
   },
   methods: {
     // chartCallback(chart) {
@@ -80,12 +69,10 @@ export default {
     //       var point = chart.series[0].points[0],
     //         newVal,
     //         inc = Math.round((Math.random() - 0.5) * 20);
-
     //       newVal = point.y + inc;
     //       if (newVal < 0 || newVal > 200) {
     //         newVal = point.y - inc;
     //       }
-
     //       point.update(newVal);
     //     }, 3000);
     //   }
@@ -99,11 +86,11 @@ export default {
           plotBackgroundColor: null,
           plotBackgroundImage: null,
           plotBorderWidth: 0,
-          plotShadow: false
+          plotShadow: false,
         },
 
         title: {
-          text: "Vecinos Satisfechos"
+          text: "Vecinos Satisfechos",
         },
 
         pane: {
@@ -113,18 +100,24 @@ export default {
             {
               backgroundColor: {
                 linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                stops: [[0, "#FFF"], [1, "#333"]]
+                stops: [
+                  [0, "#FFF"],
+                  [1, "#333"],
+                ],
               },
               borderWidth: 0,
-              outerRadius: "109%"
+              outerRadius: "109%",
             },
             {
               backgroundColor: {
                 linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                stops: [[0, "#333"], [1, "#FFF"]]
+                stops: [
+                  [0, "#333"],
+                  [1, "#FFF"],
+                ],
               },
               borderWidth: 1,
-              outerRadius: "107%"
+              outerRadius: "107%",
             },
             {
               // default background
@@ -133,9 +126,9 @@ export default {
               backgroundColor: "#DDD",
               borderWidth: 0,
               outerRadius: "105%",
-              innerRadius: "103%"
-            }
-          ]
+              innerRadius: "103%",
+            },
+          ],
         },
 
         // the value axis
@@ -156,28 +149,28 @@ export default {
           tickColor: "#666",
           labels: {
             step: 2,
-            rotation: "auto"
+            rotation: "auto",
           },
           title: {
-            text: "Satisfechos"
+            text: "Satisfechos",
           },
           plotBands: [
             {
               from: 0,
               to: 15,
-              color: "#DF5353" // red
+              color: "#DF5353", // red
             },
             {
               from: 15,
               to: 30,
-              color: "#DDDF0D" // yellow
+              color: "#DDDF0D", // yellow
             },
             {
               from: 30,
               to: 50,
-              color: "#55BF3B" // green
-            }
-          ]
+              color: "#55BF3B", // green
+            },
+          ],
         },
 
         series: [
@@ -185,13 +178,13 @@ export default {
             name: "Satisfechos",
             data: [40],
             tooltip: {
-              valueSuffix: "vecinos"
-            }
-          }
+              valueSuffix: "vecinos",
+            },
+          },
         ],
         credits: {
-          enabled: false
-        }
+          enabled: false,
+        },
       },
 
       chartMuySatisfechos: {
@@ -200,11 +193,11 @@ export default {
           plotBackgroundColor: null,
           plotBackgroundImage: null,
           plotBorderWidth: 0,
-          plotShadow: false
+          plotShadow: false,
         },
 
         title: {
-          text: "Vecinos Muy Satisfechos"
+          text: "Vecinos Muy Satisfechos",
         },
 
         pane: {
@@ -214,18 +207,24 @@ export default {
             {
               backgroundColor: {
                 linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                stops: [[0, "#FFF"], [1, "#333"]]
+                stops: [
+                  [0, "#FFF"],
+                  [1, "#333"],
+                ],
               },
               borderWidth: 0,
-              outerRadius: "109%"
+              outerRadius: "109%",
             },
             {
               backgroundColor: {
                 linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                stops: [[0, "#333"], [1, "#FFF"]]
+                stops: [
+                  [0, "#333"],
+                  [1, "#FFF"],
+                ],
               },
               borderWidth: 1,
-              outerRadius: "107%"
+              outerRadius: "107%",
             },
             {
               // default background
@@ -234,9 +233,9 @@ export default {
               backgroundColor: "#DDD",
               borderWidth: 0,
               outerRadius: "105%",
-              innerRadius: "103%"
-            }
-          ]
+              innerRadius: "103%",
+            },
+          ],
         },
 
         // the value axis
@@ -257,28 +256,28 @@ export default {
           tickColor: "#666",
           labels: {
             step: 2,
-            rotation: "auto"
+            rotation: "auto",
           },
           title: {
-            text: "Muy Satisfechos"
+            text: "Muy Satisfechos",
           },
           plotBands: [
             {
               from: 0,
               to: 15,
-              color: "#DF5353" // red
+              color: "#DF5353", // red
             },
             {
               from: 15,
               to: 30,
-              color: "#DDDF0D" // yellow
+              color: "#DDDF0D", // yellow
             },
             {
               from: 30,
               to: 50,
-              color: "#55BF3B" // green
-            }
-          ]
+              color: "#55BF3B", // green
+            },
+          ],
         },
 
         series: [
@@ -286,15 +285,15 @@ export default {
             name: "Satisfechos",
             data: [25],
             tooltip: {
-              valueSuffix: "vecinos"
-            }
-          }
+              valueSuffix: "vecinos",
+            },
+          },
         ],
         credits: {
-          enabled: false
-        }
-      }
+          enabled: false,
+        },
+      },
     };
-  }
+  },
 };
 </script>
