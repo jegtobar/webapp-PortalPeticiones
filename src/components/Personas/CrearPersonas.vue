@@ -559,7 +559,7 @@
                           :items-per-page="5"
                           class="elevation-1"
                         >
-                          <template v-slot:item.actionsActividad="{ item }">
+                          <template v-slot:[`item.actionsActividad`]="{ item }">
                             <v-icon
                               small
                               class="mr-2"
@@ -656,7 +656,7 @@
           </template>
 
           <!-- Acciones Editar-Eliminar -->
-          <template v-slot:item.actions="{ item }">
+          <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               small
               class="mr-2"
