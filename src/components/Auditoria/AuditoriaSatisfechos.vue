@@ -19,9 +19,20 @@
             label="Seleccione alcaldia"
             outlined
             color="#10069f"
-            @change="getPersonas()"
+            @change="getPersonas(), getSeguimientos()"
           >
           </v-select>
+          <download-excel
+            class="btn btn-default"
+            :data="seguimientos"
+            :fields="json_fields"
+            worksheet="Mantenimiento Satisfechos"
+            name="Mantenimiento Satisfechos.xls"
+          >
+            <v-btn elevation="2" color="success" title="Descargar seguimientos">
+              <v-icon dark> mdi-download-circle-outline </v-icon>
+            </v-btn>
+          </download-excel>
           <v-data-table
             :headers="headers"
             :items="personas"
@@ -127,10 +138,13 @@
   </v-container>
 </template>
 <script>
+import Vue from "vue";
 import axios from "axios";
 import Dialog from "@/components/Dialog/Dialog";
 import DialogContent from "@/components/Auditoria/DialogContent";
 import { mapMutations } from "vuex";
+import JsonExcel from "vue-json-excel";
+Vue.component("downloadExcel", JsonExcel);
 
 export default {
   mounted() {
@@ -201,6 +215,23 @@ export default {
     personas: [],
     colonias: [],
     editedIndex: -1,
+    seguimientos: [],
+    titulo: [],
+    json_fields: {
+      "Fecha Creación": "created_at",
+      "Primer Nombre": "pNombre",
+      "Segundo Nombre": "sNombre",
+      "Primer Apellido": "pApellido",
+      "Segundo Apellido": "sApellido",
+      Zona: "zona",
+      Distrito: "distrito",
+      Sector: "sector",
+      Colonia: "colonia",
+      Fecha: "fecha",
+      Actividad: "actividad",
+      Descripcion: "descripcion",
+      "Promotor Responsable": "responsable",
+    },
   }),
 
   computed: {
@@ -333,6 +364,22 @@ export default {
           );
         }
       });
+    },
+    getSeguimientos() {
+      axios
+        .get(
+          process.env.VUE_APP_SERVICE_URL +
+            "reporte/auditoria/mntosatisfechos/" +
+            this.alcaldias.alcaldia_id
+        )
+        .then((response) => {
+          this.seguimientos = response.data.reportes;
+          this.titulo = response.data.titulo;
+          console.log(this.seguimientos)
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
     },
   },
   components: {
