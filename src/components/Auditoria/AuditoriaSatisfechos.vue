@@ -27,7 +27,7 @@
             :data="seguimientos"
             :fields="json_fields"
             worksheet="Mantenimiento Satisfechos"
-            name="Mantenimiento Satisfechos.xls"
+            name="Auditoría Seguimientos de Mantenimiento Vecinos Satisfechos.xls"
           >
             <v-btn elevation="2" color="success" title="Descargar seguimientos">
               <v-icon dark> mdi-download-circle-outline </v-icon>
@@ -223,6 +223,7 @@ export default {
       "Segundo Nombre": "sNombre",
       "Primer Apellido": "pApellido",
       "Segundo Apellido": "sApellido",
+      "Teléfono":"celular",
       Zona: "zona",
       Distrito: "distrito",
       Sector: "sector",

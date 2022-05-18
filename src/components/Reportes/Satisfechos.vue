@@ -10,7 +10,7 @@
             :data="seguimientos"
             :fields="json_fields"
             worksheet="Seguimientos Satisfechos"
-            name="Seguimientos Satisfechos.xls"
+            name="Seguimientos Vecinos Satisfechos.xls"
             >
                 <v-btn
                 elevation="2"
@@ -48,6 +48,7 @@ export default {
             "Segundo Nombre": "sNombre",
             "Primer Apellido": "pApellido",
             "Segundo Apellido": "sApellido",
+            "Télefono":"celular",
             "Zona":"zona",
             "Distrito":"distrito",
             "Sector":"sector",
