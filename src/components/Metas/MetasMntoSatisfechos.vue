@@ -30,17 +30,17 @@
               alcaldias.alcaldia_id == '4'
             "
           >
-            <template v-slot:item.actual="{ item }">
+            <template v-slot:[`item.actual`]="{ item }">
               <v-chip color="#97d700" dark>
                 {{ item.actual }}
               </v-chip>
             </template>
-            <template v-slot:item.por_alcanzar="{ item }">
+            <template v-slot:[`item.por_alcanzar`]="{ item }">
               <v-chip color="#F92D2D" dark>
                 {{ item.por_alcanzar }}
               </v-chip>
             </template>
-            <template v-slot:item.meta="{ item }">
+            <template v-slot:[`item.meta`]="{ item }">
               <v-chip color="#10069f" dark>
                 {{ item.meta }}
               </v-chip>
@@ -195,7 +195,7 @@
                 </v-dialog>
               </v-toolbar>
             </template>
-            <template v-slot:item.actions="{ item }">
+            <template v-slot:[`item.actions`]="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil
               </v-icon>

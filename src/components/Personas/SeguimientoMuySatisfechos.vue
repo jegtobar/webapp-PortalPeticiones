@@ -394,7 +394,6 @@
                       </v-card-text>
                     </v-card>
                   </v-dialog>
-
                   <!-- Modal detalle de peticiones -->
                   <v-dialog
                     v-model="dialogSeguimiento"
