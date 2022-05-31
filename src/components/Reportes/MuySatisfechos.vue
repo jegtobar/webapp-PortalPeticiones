@@ -37,6 +37,7 @@ export default {
       "Segundo Apellido": "sApellido",
       "Celular":"celular",
       "Teléfono":"telefono_casa",
+      "Fecha de Nacimiento":"nacimiento",
       Zona: "zona",
       Distrito: "distrito",
       Sector: "sector",

@@ -35,6 +35,7 @@ export default {
       "Segundo Nombre": "sNombre",
       "Primer Apellido": "pApellido",
       "Segundo Apellido": "sApellido",
+      "Fecha de Nacimiento":"nacimiento",
       Celular: "celular",
       "Teléfono":"telefono_casa",
       Zona: "zona",

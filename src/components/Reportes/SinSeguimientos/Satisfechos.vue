@@ -47,6 +47,7 @@ export default {
             "Segundo Nombre": "sNombre",
             "Primer Apellido": "pApellido",
             "Segundo Apellido": "sApellido",
+            "Fecha de Nacimiento":"nacimiento",
             "Zona":"zona",
             "Distrito":"distrito_id",
             "Sector":"sector",
