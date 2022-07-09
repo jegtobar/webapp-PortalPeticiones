@@ -529,7 +529,9 @@
                               :items-per-page="5"
                               class="elevation-1"
                             >
-                              <template v-slot:[`item.actionsActividad`]="{ item }">
+                              <template
+                                v-slot:[`item.actionsActividad`]="{ item }"
+                              >
                                 <v-icon
                                   small
                                   class="mr-2"
@@ -675,7 +677,7 @@
 import axios from "axios";
 import MantenimientoSatisfechos from "./MantenimientoSatisfechos.vue";
 import Satisfechos from "../Reportes/Satisfechos.vue";
-import SinSeguimientos from "../Reportes/SinSeguimientos/Satisfechos.vue"
+import SinSeguimientos from "../Reportes/SinSeguimientos/Satisfechos.vue";
 
 export default {
   mounted() {
@@ -902,20 +904,131 @@ export default {
       this.search = "";
     },
     vecinosByName() {
-      axios
-        .get(
-          process.env.VUE_APP_SERVICE_URL +
-            "persona/lista/1/" +
-            this.search.split(" ").join("_")
-        )
-        .then((response) => {
-          this.search = "";
-          this.personas = response.data.persona;
-          this.loading = false;
-        })
-        .catch(function (error) {
-          console.log(error.response.data);
-        });
+      switch (localStorage.getItem("rol")) {
+        case "1": //Alcaldes auxiliares
+          if (
+            JSON.parse(localStorage.getItem("distrito")) === 1 ||
+            JSON.parse(localStorage.getItem("distrito")) === 2 ||
+            JSON.parse(localStorage.getItem("distrito")) === 3
+          ) {
+            axios
+              .get(
+                process.env.VUE_APP_SERVICE_URL +
+                  "persona/searchbyalcor/1/" +
+                  JSON.parse(localStorage.getItem("alcaldia")) +
+                  "/" +
+                  JSON.parse(localStorage.getItem("distrito")) +
+                  "/" +
+                  this.search.split(" ").join("_")
+              )
+              .then((response) => {
+                this.search = "";
+                this.personas = response.data.persona;
+                console.log(response.data)
+                this.loading = false;
+              })
+              .catch(function (error) {
+                console.log(error.response.data);
+              });
+          } else {
+            axios
+              .get(
+                process.env.VUE_APP_SERVICE_URL +
+                  "persona/searchbyalcaldiazona/1/" +
+                  JSON.parse(localStorage.getItem("alcaldia")) +
+                  "/" +
+                  this.search.split(" ").join("_")
+              )
+              .then((response) => {
+                this.search = "";
+                this.personas = response.data.persona;
+                this.loading = false;
+              })
+              .catch(function (error) {
+                console.log(error.response.data);
+              });
+          }
+          break;
+
+        case "3":
+ if (
+            JSON.parse(localStorage.getItem("distrito")) === 1 ||
+            JSON.parse(localStorage.getItem("distrito")) === 2 ||
+            JSON.parse(localStorage.getItem("distrito")) === 3
+          ) {
+            axios
+              .get(
+                process.env.VUE_APP_SERVICE_URL +
+                  "persona/searchbyalcor/1/" +
+                  JSON.parse(localStorage.getItem("alcaldia")) +
+                  "/" +
+                  JSON.parse(localStorage.getItem("distrito")) +
+                  "/" +
+                  this.search.split(" ").join("_")
+              )
+              .then((response) => {
+                this.search = "";
+                this.personas = response.data.persona;
+                console.log(response.data)
+                this.loading = false;
+              })
+              .catch(function (error) {
+                console.log(error.response.data);
+              });
+          } else {
+            axios
+              .get(
+                process.env.VUE_APP_SERVICE_URL +
+                  "persona/searchbyalcaldiazona/1/" +
+                  JSON.parse(localStorage.getItem("alcaldia")) +
+                  "/" +
+                  this.search.split(" ").join("_")
+              )
+              .then((response) => {
+                this.search = "";
+                this.personas = response.data.persona;
+                this.loading = false;
+              })
+              .catch(function (error) {
+                console.log(error.response.data);
+              });
+          }
+          break;
+        case "4":
+          axios
+            .get(
+              process.env.VUE_APP_SERVICE_URL +
+                "persona/lista/1/" +
+                this.search.split(" ").join("_")
+            )
+            .then((response) => {
+              this.search = "";
+              this.personas = response.data.persona;
+              this.loading = false;
+            })
+            .catch(function (error) {
+              console.log(error.response.data);
+            });
+          break;
+        case "6":
+          axios
+            .get(
+              process.env.VUE_APP_SERVICE_URL +
+                "persona/lista/1/" +
+                this.search.split(" ").join("_")
+            )
+            .then((response) => {
+              this.search = "";
+              this.personas = response.data.persona;
+              this.loading = false;
+            })
+            .catch(function (error) {
+              console.log(error.response.data);
+            });
+          break;
+        default:
+          break;
+      }
     },
     getZonas() {
       axios
@@ -1321,7 +1434,7 @@ export default {
   components: {
     MantenimientoSatisfechos,
     Satisfechos,
-    SinSeguimientos
+    SinSeguimientos,
   },
 };
 </script>
