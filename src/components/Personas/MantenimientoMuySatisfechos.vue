@@ -1223,7 +1223,7 @@ vecinosByName() {
       axios
         .get(
           process.env.VUE_APP_SERVICE_URL +
-            "gestion/seguimiento/mntovecinomuysatisfecho/" +
+            "gestion/seguimientos/" +
             this.seguimientoVecinosSatisfechos.id
         )
         .then((response) => {

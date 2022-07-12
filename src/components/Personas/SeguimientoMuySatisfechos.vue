@@ -1246,7 +1246,7 @@ export default {
       axios
         .get(
           process.env.VUE_APP_SERVICE_URL +
-            "gestion/seguimiento/vecinomuysatisfecho/" +
+            "gestion/seguimientos/" +
             this.seguimientoVecinosSatisfechos.id
         )
         .then((response) => {
