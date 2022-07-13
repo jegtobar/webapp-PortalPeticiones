@@ -1227,6 +1227,7 @@ export default {
         )
         .then((response) => {
           this.seguimiento = response.data;
+          console.log(this.seguimiento);
           this.loading = false;
         })
         .catch(function (error) {
@@ -1324,29 +1325,110 @@ export default {
     },
 
     putSeguimientoSatisfecho() {
-      axios
-        .put(
-          process.env.VUE_APP_SERVICE_URL +
-            "gestion/mntoseguimientosatisfecho/actualizar/" +
-            this.editarSeguimiento.id,
-          this.editarSeguimiento
-        )
-        .then(
-          this.$swal({
-            title: "Editar Seguimiento",
-            text: "Cambios guardados con éxito",
-            icon: "success",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.buscarSeguimientoVecino();
-              this.closeEditSeguimiento();
-            }
-          })
-        )
+      switch (this.editarSeguimiento.mantenimiento) {
+        case 1:
+          axios
+            .put(
+              process.env.VUE_APP_SERVICE_URL +
+                "gestion/seguimientosatisfecho/actualizar/" +
+                this.editarSeguimiento.id,
+              this.editarSeguimiento
+            )
+            .then(
+              this.$swal({
+                title: "Editar Seguimiento",
+                text: "Cambios guardados con éxito",
+                icon: "success",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.buscarSeguimientoVecino();
+                  this.closeEditSeguimiento();
+                }
+              })
+            )
 
-        .catch(function (error) {
-          console.log(error.response.data);
-        });
+            .catch(function (error) {
+              console.log(error.response.data);
+            });
+          break;
+        case 2:
+          axios
+            .put(
+              process.env.VUE_APP_SERVICE_URL +
+                "gestion/mntoseguimientosatisfecho/actualizar/" +
+                this.editarSeguimiento.id,
+              this.editarSeguimiento
+            )
+            .then(
+              this.$swal({
+                title: "Editar Seguimiento",
+                text: "Cambios guardados con éxito",
+                icon: "success",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.buscarSeguimientoVecino();
+                  this.closeEditSeguimiento();
+                }
+              })
+            )
+            .catch(function (error) {
+              console.log(error.response.data);
+            });
+          break;
+        case 3:
+          axios
+            .put(
+              process.env.VUE_APP_SERVICE_URL +
+                "gestion/seguimientomuysatisfecho/actualizar/" +
+                this.editarSeguimiento.id,
+              this.editarSeguimiento
+            )
+            .then(
+              this.$swal({
+                title: "Editar Seguimiento",
+                text: "Cambios guardados con éxito",
+                icon: "success",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.buscarSeguimientoVecino();
+                  this.closeEditSeguimiento();
+                }
+              })
+            )
+
+            .catch(function (error) {
+              console.log(error.response.data);
+            });
+          break;
+        case 4:
+          axios
+            .put(
+              process.env.VUE_APP_SERVICE_URL +
+                "gestion/mntoseguimientomuysatisfecho/actualizar/" +
+                this.editarSeguimiento.id,
+              this.editarSeguimiento
+            )
+            .then(
+              this.$swal({
+                title: "Editar Seguimiento",
+                text: "Cambios guardados con éxito",
+                icon: "success",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.buscarSeguimientoVecino();
+                  this.closeEditSeguimiento();
+                }
+              })
+            )
+
+            .catch(function (error) {
+              console.log(error.response.data);
+            });
+          break;
+
+        default:
+          break;
+      }
     },
 
     deleteSeguimiento(item) {

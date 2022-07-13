@@ -502,9 +502,6 @@ export default {
     },
 
     editarUsuario() {
-      // if(!this.editedItem.password){
-      //   this.editedItem.password = ""
-      // }
       this.editedItem.usuario_actualiza = JSON.parse(
         localStorage.getItem("username")
       );

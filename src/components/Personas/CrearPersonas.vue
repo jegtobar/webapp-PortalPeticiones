@@ -780,6 +780,7 @@ export default {
         JSON.parse(localStorage.getItem("nombres")) +
         " " +
         JSON.parse(localStorage.getItem("apellidos")),
+      usuario_creador: localStorage.getItem("username"),
     },
     editarSeguimiento: {
       id: "",
@@ -980,9 +981,6 @@ export default {
       this.ingresarSeguimiento.persona_id =
         this.seguimientoVecinosSatisfechos.id; //Asignacion del id al campo personas_id
       // this.vecino = this.seguimientoVecinosSatisfechos.seguimiento
-      this.ingresarSeguimiento.usuario_creador = JSON.parse(
-        localStorage.getItem("username")
-      );
       this.buscarSeguimientoVecino();
       this.getPromotor();
       switch (this.seguimientoVecinosSatisfechos.seguimiento) {
@@ -1149,78 +1147,28 @@ export default {
     },
     buscarSeguimientoVecino() {
       this.loading = true;
-      switch (this.seguimientoVecinosSatisfechos.seguimiento) {
-        case 1:
-          axios
-            .get(
-              process.env.VUE_APP_SERVICE_URL +
-                "gestion/seguimiento/vecinosatisfecho/" +
-                this.seguimientoVecinosSatisfechos.id
-            )
-            .then((response) => {
-              this.seguimiento = response.data;
-              this.loading = false;
-            })
-            .catch(function (error) {
-              console.log(error.response.data);
-            });
-          break;
-
-        case 2:
-          axios
-            .get(
-              process.env.VUE_APP_SERVICE_URL +
-                "gestion/seguimiento/mntovecinosatisfecho/" +
-                this.seguimientoVecinosSatisfechos.id
-            )
-            .then((response) => {
-              this.seguimiento = response.data;
-              this.loading = false;
-            })
-            .catch(function (error) {
-              console.log(error.response.data);
-            });
-          break;
-
-        case 3:
-          axios
-            .get(
-              process.env.VUE_APP_SERVICE_URL +
-                "gestion/seguimiento/vecinomuysatisfecho/" +
-                this.seguimientoVecinosSatisfechos.id
-            )
-            .then((response) => {
-              this.seguimiento = response.data;
-              this.loading = false;
-            })
-            .catch(function (error) {
-              console.log(error.response.data);
-            });
-          break;
-
-        case 4:
-          axios
-            .get(
-              process.env.VUE_APP_SERVICE_URL +
-                "gestion/seguimiento/mntovecinomuysatisfecho/" +
-                this.seguimientoVecinosSatisfechos.id
-            )
-            .then((response) => {
-              this.seguimiento = response.data;
-              this.loading = false;
-            })
-            .catch(function (error) {
-              console.log(error.response.data);
-            });
-          break;
-
-        default:
-          break;
-      }
+      axios
+        .get(
+          process.env.VUE_APP_SERVICE_URL +
+            "gestion/seguimientos/" +
+            this.seguimientoVecinosSatisfechos.id
+        )
+        .then((response) => {
+          this.seguimiento = response.data;
+          this.loading = false;
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
     },
     guardarSeguimiento() {
       this.$refs.formSeguimiento.validate();
       if (this.validSeguimiento) {
+        this.ingresarSeguimiento.responsable =
+          JSON.parse(localStorage.getItem("nombres")) +
+          " " +
+          JSON.parse(localStorage.getItem("apellidos"));
+        console.log(this.ingresarSeguimiento);
         axios
           .post(
             process.env.VUE_APP_SERVICE_URL + "gestion/seguimientos/create",
@@ -1276,8 +1224,7 @@ export default {
         correo: null,
         genero: "",
         liderazgo: "",
-        seguimiento: "", //Seguimiento 1 corresponde a los vecinos satisfechos.
-        usuario_creador: JSON.parse(localStorage.getItem("username")),
+        seguimiento: "",
       };
     },
     limpiarSeguimiento() {
@@ -1322,6 +1269,10 @@ export default {
       });
     },
     putSeguimientoSatisfecho() {
+      this.editarSeguimiento.responsable =
+        JSON.parse(localStorage.getItem("nombres")) +
+        " " +
+        JSON.parse(localStorage.getItem("apellidos"));
       switch (this.seguimientoVecinosSatisfechos.seguimiento) {
         case 1:
           axios
