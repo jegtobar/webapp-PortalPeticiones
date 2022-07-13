@@ -924,7 +924,7 @@ export default {
               .then((response) => {
                 this.search = "";
                 this.personas = response.data.persona;
-                console.log(response.data)
+                console.log(response.data);
                 this.loading = false;
               })
               .catch(function (error) {
@@ -951,7 +951,7 @@ export default {
           break;
 
         case "3":
- if (
+          if (
             JSON.parse(localStorage.getItem("distrito")) === 1 ||
             JSON.parse(localStorage.getItem("distrito")) === 2 ||
             JSON.parse(localStorage.getItem("distrito")) === 3
@@ -969,7 +969,7 @@ export default {
               .then((response) => {
                 this.search = "";
                 this.personas = response.data.persona;
-                console.log(response.data)
+                console.log(response.data);
                 this.loading = false;
               })
               .catch(function (error) {

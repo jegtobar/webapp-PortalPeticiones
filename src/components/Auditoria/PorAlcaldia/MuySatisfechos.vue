@@ -43,18 +43,41 @@ export default {
 
   methods: {
     obtener_datos() {
-      axios
-        .get(
-          process.env.VUE_APP_SERVICE_URL +
-            "reporte/mntomuysatisfechos/" +
-            JSON.parse(localStorage.getItem("alcaldia"))
-        )
-        .then((response) => {
-          this.pdf_url = response.data.url_pdf;
-        })
-        .catch(function (error) {
-          console.log(error.response.data);
-        });
+     if (
+        JSON.parse(localStorage.getItem("distrito")) === 1 ||
+        JSON.parse(localStorage.getItem("distrito")) === 2 ||
+        JSON.parse(localStorage.getItem("distrito")) === 3
+      ) {
+        axios
+          .get(
+            process.env.VUE_APP_SERVICE_URL +
+              "reporte/auditoria/mntomuysatisfechos/" +
+              JSON.parse(
+                localStorage.getItem("alcaldia")) +
+                  "/" +
+                  JSON.parse(localStorage.getItem("distrito"))
+              
+          )
+          .then((response) => {
+            this.pdf_url = response.data.url_pdf;
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+          });
+      } else {
+        axios
+          .get(
+            process.env.VUE_APP_SERVICE_URL +
+              "reporte/mntomuysatisfechos/" +
+              JSON.parse(localStorage.getItem("alcaldia"))
+          )
+          .then((response) => {
+            this.pdf_url = response.data.url_pdf;
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+          });
+      }
     },
   },
 };

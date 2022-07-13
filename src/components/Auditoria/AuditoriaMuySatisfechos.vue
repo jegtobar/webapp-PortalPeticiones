@@ -225,8 +225,8 @@ export default {
       "Segundo Nombre": "sNombre",
       "Primer Apellido": "pApellido",
       "Segundo Apellido": "sApellido",
-      "Celular":"celular",
-      "Teléfono":"telefono_casa",
+      Celular: "celular",
+      Teléfono: "telefono_casa",
       Zona: "zona",
       Distrito: "distrito",
       Sector: "sector",
@@ -324,11 +324,12 @@ export default {
       axios
         .get(
           process.env.VUE_APP_SERVICE_URL +
-            "gestion/seguimiento/mntovecinomuysatisfecho/" +
+            "gestion/seguimientos/" +
             this.seguimientoVecinosSatisfechos.id
         )
         .then((response) => {
           this.seguimiento = response.data;
+          this.loading = false;
         })
         .catch(function (error) {
           console.log(error.response.data);
@@ -348,19 +349,69 @@ export default {
         cancelButtonText: "No",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios
-            .put(
-              process.env.VUE_APP_SERVICE_URL +
-                "gestion/mntoseguimientomuysatisfecho/actualizar/" +
-                this.realizado.id,
-              this.actRealizado
-            )
-            .then(() => {
-              this.buscarSeguimientoVecino();
-            })
-            .catch(function (error) {
-              console.log(error.response.data);
-            });
+          switch (this.realizado.mantenimiento) {
+            case 1:
+              axios
+                .put(
+                  process.env.VUE_APP_SERVICE_URL +
+                    "gestion/seguimientosatisfecho/actualizar/" +
+                    this.realizado.id,
+                    this.actRealizado
+                )
+                .then(() => {
+                  this.buscarSeguimientoVecino();
+                })
+                .catch(function (error) {
+                  console.log(error.response.data);
+                });
+              break;
+            case 2:
+              axios
+                .put(
+                  process.env.VUE_APP_SERVICE_URL +
+                    "gestion/mntoseguimientosatisfecho/actualizar/" +
+                    this.realizado.id,
+                  this.actRealizado
+                )
+                .then(() => {
+                  this.buscarSeguimientoVecino();
+                })
+                .catch(function (error) {
+                  console.log(error.response.data);
+                });
+              break;
+            case 3:
+              axios
+                .put(
+                  process.env.VUE_APP_SERVICE_URL +
+                    "gestion/seguimientomuysatisfecho/actualizar/" +
+                    this.realizado.id,
+                  this.actRealizado
+                )
+                .then(() => {
+                  this.buscarSeguimientoVecino();
+                })
+                .catch(function (error) {
+                  console.log(error.response.data);
+                });
+              break;
+            case 4:
+              axios
+                .put(
+                  process.env.VUE_APP_SERVICE_URL +
+                    "gestion/mntoseguimientomuysatisfecho/actualizar/" +
+                    this.realizado.id,
+                  this.actRealizado
+                )
+                .then(() => {
+                  this.buscarSeguimientoVecino();
+                })
+                .catch(function (error) {
+                  console.log(error.response.data);
+                });
+              break;
+          }
+
           this.$swal(
             "Actualizado",
             "Seguimiento determinado como no realizado.",
@@ -369,7 +420,7 @@ export default {
         }
       });
     },
-     getSeguimientos() {
+    getSeguimientos() {
       axios
         .get(
           process.env.VUE_APP_SERVICE_URL +
