@@ -53,6 +53,8 @@
           v-if="userData.alcaldia == '3'"
         ></v-select>
         <v-divider></v-divider>
+        <br/>
+        <Lista/>
       </v-col>
     </v-row>
     <v-row>
@@ -76,11 +78,13 @@ import { Chart } from "highcharts-vue";
 import Highcharts from "highcharts";
 import hcMore from "highcharts/highcharts-more";
 import axios from "axios";
+import Lista from "../Reportes/Vecinos/Lista.vue"
 hcMore(Highcharts);
 
 export default {
   components: {
     highcharts: Chart,
+    Lista
   },
   methods: {
     //Meta global de cada alcaldia auxiliar

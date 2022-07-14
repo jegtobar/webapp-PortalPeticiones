@@ -1514,7 +1514,7 @@ export default {
   components: {
     MantenimientoSatisfechos,
     Satisfechos,
-    SinSeguimientos,
+    SinSeguimientos
   },
 };
 </script>
