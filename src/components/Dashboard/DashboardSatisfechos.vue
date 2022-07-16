@@ -215,6 +215,7 @@ export default {
         )
         .then((response) => {
           this.arreglo = response.data;
+          
         })
         .catch(function (error) {
           console.log(error.response.data);
@@ -277,6 +278,7 @@ export default {
       alcaldias: [],
       distrito: [],
       sector: [],
+      chart:[]
     };
   },
   mounted() {
