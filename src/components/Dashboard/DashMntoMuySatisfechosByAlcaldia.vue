@@ -100,18 +100,38 @@ export default {
   methods: {
     //Meta global de cada alcaldia auxiliar
     getMetasSatisfechosAlcaldias() {
-      axios
+      if (
+        JSON.parse(localStorage.getItem("distrito")) === 1 ||
+        JSON.parse(localStorage.getItem("distrito")) === 2 ||
+        JSON.parse(localStorage.getItem("distrito")) === 3
+      ) {
+        axios
         .get(
           process.env.VUE_APP_SERVICE_URL +
-            "dashboard/mntomuysatisfechos/" +
-            this.userData.alcaldia
+            "dashboard/mntomuydistritoAlcaldia/" +
+            JSON.parse(localStorage.getItem("alcaldia")) + "/" + JSON.parse(localStorage.getItem("distrito"))
         )
         .then((response) => {
           this.arreglo = response.data;
+          
         })
         .catch(function (error) {
           console.log(error.response.data);
         });
+      } else {
+        axios
+          .get(
+            process.env.VUE_APP_SERVICE_URL +
+              "dashboard/mntomuysatisfechos/" +
+              this.userData.alcaldia
+          )
+          .then((response) => {
+            this.arreglo = response.data;
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+          });
+      }
     },
     //Metas de las colonias segun distrito seleccionado
     getMetasColoniasByDistritos() {

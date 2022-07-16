@@ -53,8 +53,8 @@
           v-if="userData.alcaldia == '3'"
         ></v-select>
         <v-divider></v-divider>
-        <br/>
-        <Lista/>
+        <br />
+        <Lista />
       </v-col>
     </v-row>
     <v-row>
@@ -78,29 +78,49 @@ import { Chart } from "highcharts-vue";
 import Highcharts from "highcharts";
 import hcMore from "highcharts/highcharts-more";
 import axios from "axios";
-import Lista from "../Reportes/Vecinos/Lista.vue"
+import Lista from "../Reportes/Vecinos/Lista.vue";
 hcMore(Highcharts);
 
 export default {
   components: {
     highcharts: Chart,
-    Lista
+    Lista,
   },
   methods: {
     //Meta global de cada alcaldia auxiliar
     getMetasSatisfechosAlcaldias() {
-      axios
+      if (
+        JSON.parse(localStorage.getItem("distrito")) === 1 ||
+        JSON.parse(localStorage.getItem("distrito")) === 2 ||
+        JSON.parse(localStorage.getItem("distrito")) === 3
+      ) {
+        axios
         .get(
           process.env.VUE_APP_SERVICE_URL +
-            "dashboard/mntosatisfechos/" +
-            this.userData.alcaldia
+            "dashboard/mntodistritoAlcaldia/" +
+            JSON.parse(localStorage.getItem("alcaldia")) + "/" + JSON.parse(localStorage.getItem("distrito"))
         )
         .then((response) => {
           this.arreglo = response.data;
+          
         })
         .catch(function (error) {
           console.log(error.response.data);
         });
+      } else {
+        axios
+          .get(
+            process.env.VUE_APP_SERVICE_URL +
+              "dashboard/mntosatisfechos/" +
+              this.userData.alcaldia
+          )
+          .then((response) => {
+            this.arreglo = response.data;
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+          });
+      }
     },
     //Metas de las colonias segun distrito seleccionado
     getMetasColoniasByDistritos() {
