@@ -235,7 +235,7 @@ export default {
         text: "Fecha registro",
         align: "start",
         sortable: false,
-        value: "fecha",
+        value: "fecha_meta",
       },
       { text: "Lugar", value: "colonia" },
       { text: "Estado", value: "meta" },
@@ -418,6 +418,7 @@ export default {
         });
     },
     editarMeta() {
+      console.log(this.editedItem)
       axios
         .put(
           process.env.VUE_APP_SERVICE_URL +
