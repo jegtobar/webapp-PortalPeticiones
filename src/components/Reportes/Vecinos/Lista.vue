@@ -7,12 +7,16 @@
       worksheet="Lista de Vecinos"
       name="Lista de Vecinos.xls"
     >
+      <v-sheet color="grey" class="px-3 pt-3 pb-3" v-if="!seguimientos">
+        <v-skeleton-loader class="mx-auto" type="button"></v-skeleton-loader>
+      </v-sheet>
       <v-btn
         elevation="2"
         align="right"
         justify="space-around"
         color="primary accent-4"
         title="Descargar Vecinos"
+        v-if="seguimientos"
         >Vecinos
         <v-icon> mdi-download-circle-outline </v-icon>
       </v-btn>
@@ -31,11 +35,11 @@ export default {
     this.getSeguimientos();
   },
   data: () => ({
-    seguimientos: [],
+    seguimientos: null,
     titulo: [],
     json_fields: {
       Id: "id",
-      "Tipo de vecino":"seguimiento",
+      "Tipo de vecino": "seguimiento",
       "Primer Nombre": "pNombre",
       "Segundo Nombre": "sNombre",
       "Primer Apellido": "pApellido",
