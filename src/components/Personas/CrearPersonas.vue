@@ -914,7 +914,7 @@ export default {
     },
     getZonas() {
       axios
-        .get(process.env.VUE_APP_SERVICE_URL + "catalogo/zonas")
+        .get(process.env.VUE_APP_SERVICE_URL + "catalogo/zonas/" + JSON.parse(localStorage.getItem("alcaldia")))
         .then((response) => {
           this.zonas = response.data.zonas;
         })
@@ -1108,7 +1108,6 @@ export default {
               icon: "success",
             }).then((result) => {
               if (result.isConfirmed) {
-                this.getPersonas();
                 this.limpiarNuevo();
                 this.closeNewItem();
               }
