@@ -543,7 +543,6 @@ export default {
                 this.limpiar();
               }
             });
-            console.log(response);
           })
           .catch(function (error) {
             console.log(error);
