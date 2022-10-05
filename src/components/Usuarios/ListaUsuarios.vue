@@ -304,7 +304,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   mounted() {
     this.getUsuarios();
@@ -532,21 +531,22 @@ export default {
       if (this.valid) {
         axios
           .post(process.env.VUE_APP_SERVICE_URL + "user/register", this.newItem)
-          .then(
+          .then((response)=> {
             this.$swal({
               title: "Crear Usuario",
-              text: "Usuario registrado con éxito",
-              icon: "success",
+              text: response.data.data,
+              icon: response.data.icon,
             }).then((result) => {
               if (result.isConfirmed) {
                 this.getUsuarios();
                 this.closeNewItem();
                 this.limpiar();
               }
-            })
-          )
+            });
+            console.log(response);
+          })
           .catch(function (error) {
-            console.log(error.response.data);
+            console.log(error);
           });
       }
     },
@@ -628,7 +628,7 @@ export default {
         nit: "",
         dpi: "",
         zona: "",
-        usuario_creador: "jtobar",
+        usuario_creador: "",
       };
     },
   },
